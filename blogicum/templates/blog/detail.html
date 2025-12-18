@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ post.title }} | {{ post.location.name }} | {{ post.pub_date|date:"d E Y" }}
+{% endblock %}
+{% block content %}
+    <article>
+        {% include "includes/post_card.html" %}
+    </article>
+{% endblock %}
