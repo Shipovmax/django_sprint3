@@ -1,83 +1,78 @@
 # Blogicum
 
-## Описание
-Социальная сеть для публикации личных дневников.
-Сайт, на котором пользователь может создать свою страницу и 
-публиковать на ней сообщения («посты»).
+## Description
+Blogicum is a social platform for publishing personal diaries.
+Users can create their own pages and publish messages there as posts.
 
-## Функционал сайта
-- Для каждого поста существует категория — например «путешествия», 
-«кулинария» или «python-разработка», а также опционально можно указать
-локацию, с которой связан пост.
+## Features
+- Every post belongs to a category, such as travel, cooking, or Python
+  development, and can optionally reference a location.
 
-- Пользователь может перейти на страницу любой категории и 
-увидеть все посты, которые к ней относятся.
+- Users can open any category page and view all related posts.
 
-- Пользователи могут заходить на чужие страницы, читать 
-и комментировать чужие посты.
+- Users can visit other profiles, read posts, and comment on them.
 
-- Для своей страницы автор может задать имя и уникальный адрес.
+- Authors can define a name and a unique address for their page.
 
-- Есть возможность модерировать записи и блокировать пользователей,
-рассылающих спам.
+- The platform supports moderation and blocking users who distribute spam.
 
 
-## Установка и запуск
+## Installation and Startup
 
-**💡 ВЕРСИЯ Python3.9**
+**Python version: 3.9**
 
-Клонировать репозиторий:
+Clone the repository:
 ```
 git clone <https or SSH URL>
 ```
 
-Перейти в папку проекта:
+Change to the project directory:
 ```
 cd django_sprint3
 ```
 
-### Далее два варианта на выбор
+### Choose one of the following setup options
 ***
-### 1. Автоматическая установка
-Запустить скрипт и следовать инструкциям:
+### 1. Automatic setup
+Run the script and follow the prompts:
 ```
 bash install.sh
 ```
 
 ***
-### 2. Пошаговая установка
-Создать и активировать виртуальное окружение:
+### 2. Step-by-step setup
+Create and activate a virtual environment:
 ```
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-Обновить pip:
+Upgrade `pip`:
 ```
 python3 -m pip install --upgrade pip
 ```
 
-Установить библиотеки:
+Install the dependencies:
 ```
 pip install -r requirements.txt
 ```
 
-Выполнить миграции:
+Apply migrations:
 ```
 python3 blogicum/manage.py migrate
 ```
 
-Загрузить фикстуры DB:
+Load the database fixtures:
 ```
 python3 blogicum/manage.py loaddata db.json
 ```
 
-Создать суперпользователя:
+Create a superuser:
 ```
 python3 blogicum/manage.py createsuperuser
 ```
 
-Запустить сервер django:
+Start the Django server:
 ```
 python3 blogicum/manage.py runserver
 ```

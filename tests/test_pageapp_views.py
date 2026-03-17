@@ -9,13 +9,13 @@ from pytest_django.asserts import assertTemplateUsed
 def test_pageapp_views(user_client, page):
     response = user_client.get(f'/pages/{page}/')
     assert response.status_code == HTTPStatus.OK, (
-        f'Убедитесь, что страница `/pages/{page}/` существует и отображается '
-        'в соответствии с заданием.'
+        f'Ensure that the `/pages/{page}/` page exists and is rendered as '
+        'required.'
     )
     try:
         assertTemplateUsed(response, f'pages/{page}.html')
     except AssertionError:
         raise AssertionError(
-            f'Для страницы`/pages/{page}/` '
-            f'используйте шаблон `pages/{page}.html`'
+            f'Use the `pages/{page}.html` template for the `/pages/{page}/` '
+            'page.'
         )

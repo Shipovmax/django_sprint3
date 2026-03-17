@@ -14,13 +14,13 @@ python3 blogicum/manage.py loaddata db.json
 python3 blogicum/manage.py createsuperuser
 
 echo -e "
-${GREEN}****************************\nУстановка проекта завершена.\n****************************${ENDCOLOR}
-\nСервер можно запустить сейчас или позднее выполнив команду ${GREEN}python3 manage.py runserver${ENDCOLOR}
-в папке проекта ${GREEN}./django_sprint3/blogicum/${ENDCOLOR}"
+${GREEN}****************************\nProject setup is complete.\n****************************${ENDCOLOR}
+\nYou can start the server now or later by running ${GREEN}python3 manage.py runserver${ENDCOLOR}
+in the project directory ${GREEN}./django_sprint3/blogicum/${ENDCOLOR}"
 
 answer="N"
 while true; do
-  read -p "Выполнить запуск сервера [Y/N]: " answer
+  read -p "Start the server now [Y/N]: " answer
   case "$answer" in
   n | N | y | Y) break ;;
   esac

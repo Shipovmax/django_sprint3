@@ -4,7 +4,7 @@ from core.query_sets import post_query, category_query
 
 
 def index(request):
-    """Выводит записи на главную."""
+    """Render the homepage post feed."""
     template = "blog/index.html"
     post_list = post_query().order_by("-pub_date")[:5]
     context = {"post_list": post_list}
@@ -12,7 +12,7 @@ def index(request):
 
 
 def post_detail(request, id):
-    """Выводит отдельную страницу поста."""
+    """Render a single post page."""
     template = "blog/detail.html"
     post = get_object_or_404(
         post_query(),
@@ -23,7 +23,7 @@ def post_detail(request, id):
 
 
 def category_posts(request, category_slug):
-    """Выводит страницу категории."""
+    """Render a category page."""
     template = "blog/category.html"
     category = get_object_or_404(
         category_query(),

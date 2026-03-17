@@ -17,7 +17,7 @@ pytestmark = [
     ('pub_date', DateTimeField, {}),
     ('author', ForeignKey, {'null': False}),
     ('location', ForeignKey, {'null': True}),
-    ('category', ForeignKey, {'null': True}),  # проверить в notion
+    ('category', ForeignKey, {'null': True}),
     ('is_published', BooleanField, {'default': True}),
     ('created_at', DateTimeField, {'auto_now_add': True}),
 ])
@@ -34,12 +34,12 @@ def test_author_on_delete(posts_with_author):
         author.delete()
     except IntegrityError:
         raise AssertionError(
-            'Проверьте, что значение атрибута `on_delete` '
-            'поля `author` в модели `Post` соответствует заданию.'
+            'Ensure that the `on_delete` value for the `author` field in the '
+            '`Post` model matches the specification.'
         )
     assert not Post.objects.filter(author=author).exists(),  (
-        'Проверьте, что значение атрибута `on_delete` '
-        'поля `author` в модели `Post` соответствует заданию.'
+        'Ensure that the `on_delete` value for the `author` field in the '
+        '`Post` model matches the specification.'
     )
 
 
@@ -49,10 +49,10 @@ def test_location_on_delete(posts_with_published_locations):
         location.delete()
     except IntegrityError:
         raise AssertionError(
-            'Проверьте, что значение атрибута `on_delete` '
-            'поля `location` в модели `Post` соответствует заданию.'
+            'Ensure that the `on_delete` value for the `location` field in '
+            'the `Post` model matches the specification.'
         )
     assert Post.objects.filter(location=location).exists(), (
-        'Проверьте, что значение атрибута `on_delete` '
-        'поля `location` в модели `Post` соответствует заданию.'
+        'Ensure that the `on_delete` value for the `location` field in the '
+        '`Post` model matches the specification.'
     )

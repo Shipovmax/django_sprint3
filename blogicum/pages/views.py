@@ -2,12 +2,12 @@ from django.shortcuts import render
 
 
 def about(request):
-    """Страница О проекте."""
+    """Render the About page."""
     template = 'pages/about.html'
     return render(request, template)
 
 
 def rules(request):
-    """Страница Наши правила."""
+    """Render the Rules page."""
     template = 'pages/rules.html'
     return render(request, template)

@@ -2,15 +2,15 @@ from django.db import models
 
 
 class BaseModel(models.Model):
-    """Базовая модель."""
+    """Base abstract model."""
 
     is_published = models.BooleanField(
         default=True,
-        verbose_name='Опубликовано',
-        help_text='Снимите галочку, чтобы скрыть публикацию.',
+        verbose_name='Published',
+        help_text='Clear this checkbox to hide the entry.',
     )
     created_at = models.DateTimeField(
-        auto_now_add=True, verbose_name='Добавлено'
+        auto_now_add=True, verbose_name='Created'
     )
 
     class Meta:
@@ -18,9 +18,9 @@ class BaseModel(models.Model):
 
 
 class BaseTitle(models.Model):
-    """Базовая модель заголовка."""
+    """Base abstract model with a title."""
 
-    title = models.CharField(max_length=256, verbose_name='Заголовок')
+    title = models.CharField(max_length=256, verbose_name='Title')
 
     class Meta:
         abstract = True

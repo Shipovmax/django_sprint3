@@ -5,28 +5,27 @@ from django.apps import apps
 from django.conf import settings
 
 
-def test_rus_localization():
+def test_english_localization():
     assert hasattr(settings, 'LANGUAGE_CODE'), (
-        'В настройках приложения не обнаружен ключ `LANGUAGE_CODE`.'
+        'The application settings do not define the `LANGUAGE_CODE` key.'
     )
-    assert settings.LANGUAGE_CODE == 'ru-RU', (
-        'В настройках приложения значение ключа '
-        '`LANGUAGE_CODE` должно быть `ru-RU`.'
+    assert settings.LANGUAGE_CODE == 'en-us', (
+        'The `LANGUAGE_CODE` setting must be set to `en-us`.'
     )
 
 
-def test_blog_in_rus():
+def test_blog_in_english():
     applications = apps.get_app_configs()
     blog_app = list(filter(lambda x: x.name == 'blog', applications))[0]
-    assert blog_app.verbose_name == 'Блог', (
-        'Приложение `Blog` не локализированно.'
+    assert blog_app.verbose_name == 'Blog', (
+        'The `Blog` application is not localized in English.'
     )
 
 
 @pytest.mark.parametrize(('n_model', 'n_verbose', 'n_verbose_plural'), [
-    ('Category', 'категория', 'Категории'),
-    ('Location', 'местоположение', 'Местоположения'),
-    ('Post', 'публикация', 'Публикации'),
+    ('Category', 'category', 'Categories'),
+    ('Location', 'location', 'Locations'),
+    ('Post', 'post', 'Posts'),
 ])
 def test_models_translated(n_model, n_verbose, n_verbose_plural):
     models = apps.get_models()
@@ -36,46 +35,43 @@ def test_models_translated(n_model, n_verbose, n_verbose_plural):
         and hasattr(model, 'Meta')
     ]
     assert found_model, (
-        f'Убедитесь, что в модели `{n_model}` описан подкласс `Meta`.'
+        f'Ensure the `{n_model}` model defines a `Meta` subclass.'
     )
     found_model = found_model[0]
     assert found_model._meta.verbose_name == n_verbose, (
-        f'Убедитесь, что в модели `{n_model}` значение для `verbose_name` '
-        'установлено в соответствии с заданием.'
+        f'Ensure the `{n_model}` model sets `verbose_name` as required.'
     )
     assert (
         found_model._meta.verbose_name_plural == n_verbose_plural
     ), (
-        f'Убедитесь, что в модели `{n_model}` значение для '
-        '`verbose_name_plural` установлено в соответствии с заданием.'
+        f'Ensure the `{n_model}` model sets `verbose_name_plural` as required.'
     )
 
 
 @pytest.mark.parametrize(('n_model', 'param', 'n_verbose'), [
-    ('Category', 'is_published', 'Опубликовано'),
-    ('Category', 'title', 'Заголовок'),
-    ('Category', 'slug', 'Идентификатор'),
-    ('Category', 'description', 'Описание'),
-    ('Category', 'created_at', 'Добавлено'),
-    ('Location', 'name', 'Название места'),
-    ('Location', 'created_at', 'Добавлено'),
-    ('Location', 'is_published', 'Опубликовано'),
-    ('Post', 'pub_date', 'Дата и время публикации'),
-    ('Post', 'text', 'Текст'),
-    ('Post', 'author', 'Автор публикации'),
-    ('Post', 'category', 'Категория'),
-    ('Post', 'location', 'Местоположение'),
-    ('Post', 'created_at', 'Добавлено'),
-    ('Post', 'is_published', 'Опубликовано'),
+    ('Category', 'is_published', 'Published'),
+    ('Category', 'title', 'Title'),
+    ('Category', 'slug', 'Slug'),
+    ('Category', 'description', 'Description'),
+    ('Category', 'created_at', 'Created'),
+    ('Location', 'name', 'Place name'),
+    ('Location', 'created_at', 'Created'),
+    ('Location', 'is_published', 'Published'),
+    ('Post', 'pub_date', 'Publication date and time'),
+    ('Post', 'text', 'Text'),
+    ('Post', 'author', 'Post author'),
+    ('Post', 'category', 'Category'),
+    ('Post', 'location', 'Location'),
+    ('Post', 'created_at', 'Created'),
+    ('Post', 'is_published', 'Published'),
 ])
 def test_models_params_translate(n_model, param, n_verbose):
     module = importlib.import_module('blog.models')
     model = getattr(module, n_model)
     field = model._meta.get_field(param)
     assert field.verbose_name == n_verbose, (
-        f'Убедитесь, что в модели `{n_model}` значение `verbose_name` '
-        f' для атрибута `{param}` '
-        'установлено в соответствии с заданием.'
+        f'Ensure the `{n_model}` model sets `verbose_name` correctly '
+        f'for the `{param}` field.'
     )
 
 
@@ -83,19 +79,17 @@ def test_models_params_translate(n_model, param, n_verbose):
     (
         'Category',
         'is_published',
-        'Снимите галочку, чтобы скрыть публикацию.'
+        'Clear this checkbox to hide the entry.'
     ),
     (
         'Category',
         'slug',
-        'Идентификатор страницы для URL; '
-        'разрешены символы латиницы, цифры, дефис и подчёркивание.'
+        'URL page identifier; letters, numbers, hyphens, and underscores are allowed.'
     ),
     (
         'Post',
         'pub_date',
-        'Если установить дату и время в будущем — '
-        'можно делать отложенные публикации.'
+        'Set a future date and time to schedule the post.'
     ),
 ])
 def test_help_text_translate(n_model, param, text):
@@ -103,7 +97,6 @@ def test_help_text_translate(n_model, param, text):
     model = getattr(module, n_model)
     field = model._meta.get_field(param)
     assert field.help_text == text, (
-        f'Убедитесь, что в модели `{n_model}` значение `help_text` '
-        f'для атрибута `{param}` '
-        'установлено в соответствии с заданием.'
+        f'Ensure the `{n_model}` model sets `help_text` correctly '
+        f'for the `{param}` field.'
     )

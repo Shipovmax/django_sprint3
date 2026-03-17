@@ -2,23 +2,23 @@ from django.contrib import admin
 
 from .models import Location, Category, Post
 
-admin.site.empty_value_display = "Не задано"
+admin.site.empty_value_display = "Not set"
 
 
 def get_all_fields(model):
-    """Вернуть список всех полей модели."""
+    """Return the full list of model fields."""
     return model._meta.get_fields()
 
 
 class BlogAdmin(admin.ModelAdmin):
-    """Общий интерфейс админ-панели блог."""
+    """Shared admin configuration for the blog app."""
 
     list_editable = ("is_published",)
 
 
 @admin.register(Post)
 class PostAdmin(BlogAdmin):
-    """Интерфейс для постов."""
+    """Admin configuration for posts."""
 
     list_display = [
         field.name
@@ -40,7 +40,7 @@ class PostAdmin(BlogAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(BlogAdmin):
-    """Интерфейс для категорий."""
+    """Admin configuration for categories."""
 
     list_display = (
         "title",
@@ -52,7 +52,7 @@ class CategoryAdmin(BlogAdmin):
 
 @admin.register(Location)
 class LocationAdmin(BlogAdmin):
-    """Интерфейс для местоположения."""
+    """Admin configuration for locations."""
 
     list_display = (
         "name",

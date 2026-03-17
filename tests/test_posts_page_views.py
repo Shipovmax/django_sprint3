@@ -13,8 +13,8 @@ def test_all_unpublished(
     response = user_client.get('/')
     context_post_list = response.context.get(main_page_post_list_context_key)
     assert len(context_post_list) == 0, (
-        'Убедитесь, что если в проекте нет ни одного опубликованного поста - '
-        'то на главной странице нет записей.'
+        'Ensure that if the project has no published posts, no posts are '
+        'shown on the homepage.'
     )
 
 
@@ -27,15 +27,13 @@ def test_mixed_published(
     context_post_list = response.context.get(main_page_post_list_context_key)
     n_expected = len(posts_with_published_locations)
     assert len(context_post_list) == n_expected, (
-        'Убедитесь, что при обращении к главной странице в словарь контекста '
-        f'под ключом `{main_page_post_list_context_key}` передаются только '
-        'опубликованные записи с опубликованной категорией '
-        'и датой публикации в прошлом.'
+        'Ensure that the homepage context key '
+        f'`{main_page_post_list_context_key}` contains only published posts '
+        'with a published category and a publication date in the past.'
     )
     assert all(x.is_published for x in context_post_list), (
-        'При обращении к главной странице в словаре контекста '
-        f'под ключом `{main_page_post_list_context_key}` '
-        'должны передаваться только опубликованные записи.'
+        'Ensure that the homepage context key '
+        f'`{main_page_post_list_context_key}` contains only published posts.'
     )
 
 
@@ -55,13 +53,11 @@ def test_check_context_keys(
     if isinstance(key, tuple):
         key_1, key_2 = key
         assert getattr(getattr(context_post_list[0], key_1), key_2) in html, (
-            'На главной странице '
-            f'не использовано значение атрибута `{key_1}.{key_2}`.'
+            f'The homepage does not use the `{key_1}.{key_2}` attribute value.'
         )
     else:
         assert getattr(context_post_list[0], key) in html, (
-            'На главной странице '
-            f'не использовано значение атрибута публикаций `{key}`.'
+            f'The homepage does not use the post attribute value `{key}`.'
         )
 
 
@@ -71,9 +67,8 @@ def test_category_unpublished(
     response = user_client.get('/')
     context_post_list = response.context.get(main_page_post_list_context_key)
     assert len(context_post_list) == 0, (
-        'Если категория снята с публикации, '
-        'то на главной странице не должны отображаться '
-        'относящиеся к ней посты.'
+        'If a category is unpublished, its posts must not appear on the '
+        'homepage.'
     )
 
 
@@ -82,8 +77,8 @@ def test_pub_date_later_today(
     response = user_client.get('/')
     context_post_list = response.context.get(main_page_post_list_context_key)
     assert len(context_post_list) == 0, (
-        'Если дата публикации поста позже текущего времени, '
-        'он не должен отображаться на главной странице.'
+        'If a post publication date is in the future, it must not appear on '
+        'the homepage.'
     )
 
 
@@ -94,10 +89,8 @@ def test_posts_with_published_location(
     response = user_client.get('/')
     context_post_list = response.context.get(main_page_post_list_context_key)
     assert all(x.location for x in context_post_list), (
-        'Убедитесь, что в словаре контекста для главной страницы '
-        'в объектах постов, '
-        'отмеченных географической меткой, '
-        'передаётся ключ `location` и значение этого ключа.'
+        'Ensure that posts marked with a location include the `location` key '
+        'and its value in the homepage context.'
     )
 
 
@@ -107,9 +100,8 @@ def test_posts_with_unpublished_locations(
     response = user_client.get('/')
     context_post_list = response.context.get(main_page_post_list_context_key)
     assert len(context_post_list) == N_TEST_POSTS, (
-        ' Убедитесь, что в словарь контекста главной страницы '
-        'попадают даже те записи, '
-        'географическая метка которых не опубликована.'
+        'Ensure that the homepage context also includes posts whose location '
+        'is unpublished.'
     )
 
 
@@ -119,6 +111,6 @@ def test_many_posts_on_main_page(
     response = user_client.get('/')
     context_post_list = response.context.get(main_page_post_list_context_key)
     assert len(context_post_list) == N_POSTS_LIMIT, (
-        'Убедитесь, что на главной странице '
-        f'отображается только {N_POSTS_LIMIT} последних публикаций.'
+        f'Ensure that only the latest {N_POSTS_LIMIT} posts are displayed on '
+        'the homepage.'
     )

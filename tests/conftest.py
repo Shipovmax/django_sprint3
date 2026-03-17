@@ -9,8 +9,8 @@ try:
     from blog.models import Category, Location, Post  # noqa:F401
 except ImportError:
     raise AssertionError(
-        'В приложении `blog` опишите '
-        'модели `Post, Category, Location`'
+        'Define the `Post`, `Category`, and `Location` models '
+        'in the `blog` application.'
     )
 except RuntimeError:
     registered_apps = set(app.name for app in apps.get_app_configs())
@@ -22,7 +22,7 @@ except RuntimeError:
     for need_app_name, need_app_conf_name in need_apps.items():
         if need_app_conf_name not in registered_apps:
             raise AssertionError(
-                f'Убедитесь, что зарегистрировано приложение {need_app_name}'
+                f'Ensure the `{need_app_name}` application is registered.'
             )
 
 pytest_plugins = [
@@ -50,8 +50,7 @@ def user_client(user, client):
 @pytest.fixture
 def post_context_key(user_client, post_with_published_location):
     check_post_page_msg = (
-        'Убедитесь, что страница публикации '
-        'существует и отображается в соответствии с заданием.'
+        'Ensure the post page exists and is rendered as required.'
     )
     try:
         post_response = user_client.get(
@@ -65,7 +64,7 @@ def post_context_key(user_client, post_with_published_location):
             post_key = key
             break
     assert post_key, (
-        'Убедитесь, что в контекст страницы поста передан пост.'
+        'Ensure the post page context includes a post object.'
     )
     return post_key
 
@@ -96,13 +95,12 @@ def main_page_post_list_context_key(mixer, user_client):
     temp_post = mixer.blend('blog.Post', is_published=True,
                             location=temp_location, category=temp_category)
     page_load_err_msg = (
-        'Убедитесь, что главная страница существует и отображается '
-        'в соответствии с заданием.'
+        'Ensure the homepage exists and is rendered as required.'
     )
     key_missing_msg = (
-        'Убедитесь, что если существует хотя бы один опубликованный пост '
-        'с опубликованной категорией и датой публикации в прошлом, '
-        'в контекст главной страницы передаётся непустой список постов.'
+        'Ensure that if there is at least one published post with a '
+        'published category and a publication date in the past, the homepage '
+        'context contains a non-empty post list.'
     )
     try:
         result = get_post_list_context_key(
@@ -124,14 +122,13 @@ def category_page_post_list_context_key(mixer, user_client):
         'blog.Post', is_published=True,
         category=temp_category, location=temp_location)
     page_load_err_msg = (
-        'Убедитесь, что страница категории существует и отображается '
-        'в соответствии с заданием в случае, '
-        'если категория существует и опубликована.'
+        'Ensure the category page exists and is rendered as required when the '
+        'category exists and is published.'
     )
     key_missing_msg = (
-        'Убедитесь, что если существует хотя бы один опубликованный пост '
-        'с опубликованной категорией и датой публикации в прошлом, '
-        'в контекст страницы категории передаётся непустой список постов.'
+        'Ensure that if there is at least one published post with a '
+        'published category and a publication date in the past, the category '
+        'page context contains a non-empty post list.'
     )
     try:
         result = get_post_list_context_key(
@@ -151,7 +148,7 @@ class _TestModelAttrs:
     @property
     def model(self):
         raise NotImplementedError(
-            'Override this property in inherited test class')
+            'Override this property in the inherited test class.')
 
     def get_parameter_display_name(self, param):
         return param
@@ -159,20 +156,20 @@ class _TestModelAttrs:
     def test_model_attrs(self, field, type, params):
         model_name = self.model.__name__
         assert hasattr(self.model, field), (
-            f'В модели `{model_name}` укажите атрибут `{field}`.')
+            f'Define the `{field}` attribute in the `{model_name}` model.')
         model_field = self.model._meta.get_field(field)
         assert isinstance(model_field, type), (
-            f'В модели `{model_name}` у атрибута `{field}` '
-            f'укажите тип `{type}`.'
+            f'Ensure the `{field}` attribute in the `{model_name}` model '
+            f'uses the `{type}` type.'
         )
         for param, value_param in params.items():
             display_name = self.get_parameter_display_name(param)
             assert param in model_field.__dict__, (
-                f'В модели `{model_name}` для атрибута `{field}` '
-                f'укажите параметр `{display_name}`.'
+                f'Configure the `{display_name}` parameter for the '
+                f'`{field}` attribute in the `{model_name}` model.'
             )
             assert model_field.__dict__.get(param) == value_param, (
-                f'В модели `{model_name}` в атрибуте `{field}` '
-                f'проверьте значение параметра `{display_name}` '
-                'на соответствие заданию.'
+                f'Ensure the `{display_name}` parameter for the `{field}` '
+                f'attribute in the `{model_name}` model matches the '
+                'specification.'
             )

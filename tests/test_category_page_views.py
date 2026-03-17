@@ -19,19 +19,16 @@ def test_category_page(
     context_post_list = get_category_posts()
     assert len(context_post_list) == len(
         posts_with_published_locations), (
-        'Убедитесь, что при обращении к странице `/category/<slug:slug>/` в '
-        'словаре контекста под ключом '
-        f'`{category_page_post_list_context_key}` '
-        'передаются все не снятые с публикации записи, принадлежащие этой '
-        'категории.'
+        'Ensure that the `/category/<slug:slug>/` page context key '
+        f'`{category_page_post_list_context_key}` contains all published '
+        'posts belonging to this category.'
     )
     context_post_list[0].is_published = False
     context_post_list[0].save()
     assert all(x.is_published for x in get_category_posts()), (
-        'Проверьте, что при обращении к странице `/category/<slug:slug>/` '
-        'в словаре контекста '
-        f'под ключом `{category_page_post_list_context_key}`, '
-        'передаются только опубликованные записи.'
+        'Ensure that the `/category/<slug:slug>/` page context key '
+        f'`{category_page_post_list_context_key}` contains only published '
+        'posts.'
     )
 
 
@@ -53,13 +50,12 @@ def test_category_page_check_context_keys(
         key_1, key_2 = key
         assert getattr(
             getattr(context_post_list[0], key_1), key_2) in html, (
-            'На странице категории '
-            f'не использовано значение атрибута `{key_1}.{key_2}`.'
+            f'The category page does not use the `{key_1}.{key_2}` attribute '
+            'value.'
         )
     else:
         assert getattr(context_post_list[0], key) in html, (
-            'На странице категории '
-            f'не использовано значение атрибута публикаций `{key}`.'
+            f'The category page does not use the post attribute value `{key}`.'
         )
 
 
@@ -70,8 +66,7 @@ def test_category_page_category_unpublished(
     category_slug = posts_with_unpublished_category[0].category.slug
     response = user_client.get(f'/category/{category_slug}/')
     assert response.status_code == HTTPStatus.NOT_FOUND, (
-        'Убедитесь, что страница категории, снятой с публикации, '
-        'возвращает статус 404.'
+        'Ensure that an unpublished category page returns HTTP 404.'
     )
 
 
@@ -85,8 +80,8 @@ def test_category_page_posts_unpublished(
         context_post_list = response.context.get(
             category_page_post_list_context_key)
         assert len(context_post_list) == 0, (
-            'Убедитесь, что когда в категории нет опубликованных постов, '
-            'они не передаются в контекст её страницы.'
+            'Ensure that when a category has no published posts, no posts are '
+            'passed to its page context.'
         )
 
 
@@ -101,8 +96,8 @@ def test_category_page_pub_date_later_today(
         context_post_list = response.context.get(
             category_page_post_list_context_key)
         assert len(context_post_list) == 0, (
-            'Убедитесь, что на странице категории '
-            'не выводятся записи с датой публикации в будущем.'
+            'Ensure that posts with a future publication date are not '
+            'displayed on the category page.'
         )
 
 
@@ -115,9 +110,8 @@ def test_category_page_posts_with_location(
     context_post_list = response.context.get(
         category_page_post_list_context_key)
     assert all(x.location for x in context_post_list), (
-        'Убедитесь, что на странице категории '
-        'в объектах постов, отмеченных опубликованной географической '
-        'меткой, передаётся ключ `location` и его значение.'
+        'Ensure that posts marked with a published location include the '
+        '`location` key and its value on the category page.'
     )
 
 
@@ -130,9 +124,8 @@ def test_category_page_posts_with_unpublished_locations(
     context_post_list = response.context.get(
         category_page_post_list_context_key)
     assert len(context_post_list) == len(posts_with_unpublished_locations), (
-        ' Убедитесь, что в словарь контекста страницы категории '
-        'попадают и те записи этой категории, '
-        'географическая метка которых снята с публикации.'
+        'Ensure that the category page context also includes posts whose '
+        'location is unpublished.'
     )
 
 
@@ -145,8 +138,8 @@ def test_many_posts_on_category_page(
         category_page_post_list_context_key)
     assert len(context_post_list) == len(
         many_posts_with_published_locations), (
-        'Убедитесь, что на странице категории '
-        'отображаются все относящиеся к ней опубликованные посты.'
+        'Ensure that the category page displays all published posts belonging '
+        'to it.'
     )
 
 
@@ -161,7 +154,6 @@ def test_no_other_posts_on_category_page(
         category_page_post_list_context_key)
     assert len(context_post_list) == len(
         posts_with_published_locations), (
-        'Убедитесь, что на странице категории '
-        'отображаются опубликованные посты, относящиеся исключительно к этой '
-        'категории.'
+        'Ensure that the category page displays only the published posts that '
+        'belong to this category.'
     )

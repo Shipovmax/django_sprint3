@@ -3,15 +3,15 @@ def test_blog_urls():
         from blog.urls import urlpatterns as solution_urlpatterns
     except Exception as e:
         raise AssertionError(
-            'При импорте списка маршрутов `urlpatterns` из файла '
-            f'`blog/urls.py` произошла ошибка: {e}'
+            'An error occurred while importing `urlpatterns` from '
+            f'`blog/urls.py`: {e}'
         ) from e
     assert isinstance(solution_urlpatterns, list), (
-        'Убедитесь, что значением переменной `urlpatterns` является список.'
+        'Ensure that `urlpatterns` is defined as a list.'
     )
     assert len(solution_urlpatterns) >= 3, (
-        'Убедитесь, что к головному списку `urlpatterns` подключены маршруты '
-        'из файла `blog/urls.py`.'
+        'Ensure that the root `urlpatterns` includes the routes from '
+        '`blog/urls.py`.'
     )
 
 
@@ -20,16 +20,15 @@ def test_pages_urls():
         from pages.urls import urlpatterns as solution_urlpatterns
     except Exception as e:
         raise AssertionError(
-            'При импорте списка маршрутов `urlpatterns` из файла '
-            f'`pages/urls.py` произошла ошибка: {e}'
+            'An error occurred while importing `urlpatterns` from '
+            f'`pages/urls.py`: {e}'
         ) from e
     assert isinstance(solution_urlpatterns, list), (
-        'Убедитесь, что значением переменной `urlpatterns` из файла '
-        '`pages/urls.py` является список.'
+        'Ensure that `urlpatterns` in `pages/urls.py` is defined as a list.'
     )
     assert len(solution_urlpatterns) >= 2, (
-        'Убедитесь, что к головному списку `urlpatterns` подключены маршруты '
-        'из файла `pages/urls.py`.'
+        'Ensure that the root `urlpatterns` includes the routes from '
+        '`pages/urls.py`.'
     )
 
 
@@ -38,14 +37,13 @@ def test_blogicum_urls():
         from blogicum.urls import urlpatterns as solution_urlpatterns
     except Exception as e:
         raise AssertionError(
-            'При импорте списка маршрутов `urlpatterns` из файла '
-            f'`blogicum/urls.py` произошла ошибка: {e}'
+            'An error occurred while importing `urlpatterns` from '
+            f'`blogicum/urls.py`: {e}'
         ) from e
     assert isinstance(solution_urlpatterns, list), (
-        'Убедитесь, что значением переменной `urlpatterns` из файла '
-        '`blogicum/urls.py` является список.'
+        'Ensure that `urlpatterns` in `blogicum/urls.py` is defined as a list.'
     )
     assert len(solution_urlpatterns) >= 3, (
-        'Убедитесь, что к головному списку `urlpatterns` подключены маршруты '
-        'из файла `blogicum/urls.py`.'
+        'Ensure that the root `urlpatterns` includes the routes from '
+        '`blogicum/urls.py`.'
     )

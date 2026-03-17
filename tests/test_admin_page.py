@@ -7,6 +7,6 @@ def test_admin_register():
     for model in models:
         if model._meta.object_name in ('Category', 'Post', 'Location'):
             assert model in admin.site._registry, (
-                f'Убедитесь, что модель `{model._meta.object_name}` '
-                'зарегистрирована в админке.'
+                f'Ensure that the `{model._meta.object_name}` model is '
+                'registered in the Django admin site.'
             )

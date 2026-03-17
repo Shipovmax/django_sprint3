@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block title %}
-  Публикации в категории «{{ category.title }}»
+  Posts in “{{ category.title }}”
 {% endblock %}
 {% block content %}
-  <h1>Публикации в категории «{{ category.title }}»</h1>
+  <h1>Posts in “{{ category.title }}”</h1>
   <p class="mb-5">{{ category.description }}</p>
   {% for post in post_list %}
     <article class="mb-5">

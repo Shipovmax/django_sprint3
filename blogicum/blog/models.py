@@ -7,51 +7,49 @@ User = get_user_model()
 
 
 class Location(BaseModel):
-    """Местоположение."""
+    """Location."""
 
-    name = models.CharField(max_length=256, verbose_name="Название места")
+    name = models.CharField(max_length=256, verbose_name="Place name")
 
     class Meta:
-        verbose_name = "местоположение"
-        verbose_name_plural = "Местоположения"
+        verbose_name = "location"
+        verbose_name_plural = "Locations"
 
     def __str__(self):
         return self.name
 
 
 class Category(BaseModel, BaseTitle):
-    """Категория."""
+    """Category."""
 
-    description = models.TextField(verbose_name="Описание")
+    description = models.TextField(verbose_name="Description")
     slug = models.SlugField(
         unique=True,
-        verbose_name="Идентификатор",
-        help_text="Идентификатор страницы для URL; "
-        "разрешены символы латиницы, цифры, дефис и подчёркивание.",
+        verbose_name="Slug",
+        help_text="URL page identifier; letters, numbers, hyphens, and underscores are allowed.",
     )
 
     class Meta:
-        verbose_name = "категория"
-        verbose_name_plural = "Категории"
+        verbose_name = "category"
+        verbose_name_plural = "Categories"
 
     def __str__(self):
         return self.title
 
 
 class Post(BaseModel, BaseTitle):
-    """Публикация."""
+    """Post."""
 
-    text = models.TextField(verbose_name="Текст")
+    text = models.TextField(verbose_name="Text")
     pub_date = models.DateTimeField(
-        verbose_name="Дата и время публикации",
-        help_text="Если установить дату и время в будущем — "
-        "можно делать отложенные публикации.",
+        verbose_name="Publication date and time",
+        help_text="Set a future date and time to schedule the post.",
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="author_posts",
-        verbose_name="Автор публикации",
+        verbose_name="Post author",
     )
     location = models.ForeignKey(
         Location,
@@ -59,19 +57,19 @@ class Post(BaseModel, BaseTitle):
         null=True,
         related_name="loc_posts",
         blank=True,
-        verbose_name="Местоположение",
+        verbose_name="Location",
     )
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
         null=True,
         related_name="cat_posts",
-        verbose_name="Категория",
+        verbose_name="Category",
     )
 
     class Meta:
-        verbose_name = "публикация"
-        verbose_name_plural = "Публикации"
+        verbose_name = "post"
+        verbose_name_plural = "Posts"
 
     def __str__(self):
         return self.title
